@@ -20,6 +20,7 @@ logging.basicConfig(
     ]
 )
 
+# Configure feedback logging
 feedback_logger = logging.getLogger("feedback")
 feedback_logger.setLevel(logging.INFO)
 feedback_logger.addHandler(logging.FileHandler(FEEDBACK_FILE))
