@@ -10,6 +10,9 @@ from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from collections import Counter
 
+CORS_headers = {
+    "origins": "*"
+}
 app = Flask(__name__)
 CORS(app)
 
@@ -17,7 +20,8 @@ CORS(app)
 app.secret_key = os.getenv("SECRET_KEY", "your_default_secret_key_here")
 
 # Database configuration
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
+# Use DATABASE_URL env var when provided (recommended for production). Falling back to local sqlite for dev.
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'sqlite:///users.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
@@ -36,7 +40,17 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 # Load inquiries and responses from CSV
-stop_words = set(stopwords.words('english'))
+# Ensure NLTK data is available (will attempt to download inside serverless environment if missing)
+try:
+    stop_words = set(stopwords.words('english'))
+except Exception:
+    try:
+        import nltk
+        nltk.download('punkt')
+        nltk.download('stopwords')
+        stop_words = set(stopwords.words('english'))
+    except Exception:
+        stop_words = set()
 
 # Function to preprocess text by removing stopwords
 def preprocess_text(text):

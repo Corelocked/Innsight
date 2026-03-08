@@ -1,0 +1,47 @@
+# Exclude unnecessary files from Vercel deployment
+# Reduces deployment size and improves build times
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Virtual environments
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+logs/
+*.log
+
+# Model training files (not needed for deployment)
+voice-order-system/models/model_training.py
+voice-order-system/models/inquiry_training.py
+
+# Local development files
+.env.local
+instance/
+
+# Documentation
+README.md
+
+# Original voice-order-system (using api/ for deployment)
+voice-order-system/
+
+# Large ML model files (if not needed)
+*.h5
+*.pkl
+*.joblib
+
+# Testing
+*.test.js
+*.spec.js
+setupTests.js

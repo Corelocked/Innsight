@@ -11,7 +11,6 @@ firebase-debug.*.log*
 .firebase/
 
 # Firebase config
-
 # Uncomment this if you'd like others to create their own Firebase project.
 # For a team working on the same Firebase project(s), it is recommended to leave
 # it commented so all members can deploy to the same project(s) in .firebaserc.
@@ -64,6 +63,49 @@ node_modules/
 
 # dotenv environment variables file
 .env
+.env.local
+.env.production.local
+.env.development.local
 
 # dataconnect generated files
 .dataconnect
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+pip-log.txt
+pip-delete-this-directory.txt
+.pytest_cache/
+*.egg-info/
+dist/
+build/
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+instance/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Vercel
+.vercel
+
+# Model files (large binaries)
+*.h5
+*.pkl
+*.joblib
+
+# NLTK data (downloaded at runtime)
+nltk_data/
