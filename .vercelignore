@@ -48,3 +48,8 @@ requirements-full.txt
 *.test.js
 *.spec.js
 setupTests.js
+
+# Firebase files (not needed for Vercel deployment)
+voice-order-ui/firebase.json
+voice-order-ui/.firebaserc
+voice-order-ui/public/404.html
