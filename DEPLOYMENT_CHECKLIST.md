@@ -17,7 +17,7 @@
 Configure in: Vercel Dashboard → Project → Settings → Environment Variables
 
 ### Frontend Variables
-- [ ] `REACT_APP_API_URL` = `https://your-project.vercel.app`
+- [ ] `REACT_APP_API_URL` = optional; leave unset for same-origin API in production
 - [ ] `REACT_APP_FIREBASE_API_KEY` = Your Firebase API key
 - [ ] `REACT_APP_FIREBASE_AUTH_DOMAIN` = Your Firebase auth domain
 - [ ] `REACT_APP_FIREBASE_PROJECT_ID` = Your Firebase project ID

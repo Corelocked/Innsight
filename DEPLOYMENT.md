@@ -41,7 +41,8 @@ Create these environment variables in Vercel Dashboard:
 
 **Frontend Variables** (Project → Settings → Environment Variables):
 ```
-REACT_APP_API_URL=https://your-project.vercel.app
+# Optional: leave unset for same-origin API in production
+# REACT_APP_API_URL=https://api.example.com
 REACT_APP_FIREBASE_API_KEY=your_key
 REACT_APP_FIREBASE_AUTH_DOMAIN=your-domain
 REACT_APP_FIREBASE_PROJECT_ID=your-project-id

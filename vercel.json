@@ -12,7 +12,10 @@
     }
   ],
   "routes": [
-    { "src": "/api/(.*)", "dest": "/api/$1.py" },
+    { "src": "/api/voice-order", "dest": "/api/voice_order.py" },
+    { "src": "/api/feedback", "dest": "/api/feedback.py" },
+    { "src": "/api/user-preferences", "dest": "/api/user_preferences.py" },
+    { "src": "/api/health", "dest": "/api/health.py" },
     { "handle": "filesystem" },
     { "src": "/(.*)", "dest": "voice-order-ui/$1" }
   ],
