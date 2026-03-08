@@ -109,3 +109,4 @@ instance/
 
 # NLTK data (downloaded at runtime)
 nltk_data/
+.env*.local
