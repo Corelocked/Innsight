@@ -173,20 +173,29 @@ const VoiceOrder = () => {
             setInput(''); // Clear input field
         } catch (error) {
             let errorMessage = 'An error occurred. Please try again.';
-            
-            if (error.response) {
-                // Server responded with error
-                errorMessage = error.response.data?.error || error.response.statusText;
-            } else if (error.request) {
+
+            if (error && error.response) {
+                // Server responded with error - normalize to string
+                const serverErr = error.response.data?.error;
+                if (serverErr) {
+                    if (typeof serverErr === 'string') {
+                        errorMessage = serverErr;
+                    } else if (typeof serverErr === 'object') {
+                        errorMessage = serverErr.message || JSON.stringify(serverErr);
+                    }
+                } else {
+                    errorMessage = error.response.statusText || errorMessage;
+                }
+            } else if (error && error.request) {
                 // Request made but no response
                 errorMessage = 'No response from the server. Please check your network connection.';
-            } else if (error.code === 'ECONNABORTED') {
+            } else if (error && error.code === 'ECONNABORTED') {
                 errorMessage = 'Request timed out. Please try again.';
-            } else {
+            } else if (error && error.message) {
                 errorMessage = error.message;
             }
-            
-            setError(errorMessage);
+
+            setError(String(errorMessage));
             setResponse('');
         } finally {
             setLoading(false);
@@ -219,7 +228,9 @@ const VoiceOrder = () => {
             alert('Thank you for your feedback!');
         } catch (error) {
             console.error('Feedback submission error:', error);
-            setError('Error submitting feedback. Please try again.');
+            const fbErr = error?.response?.data?.error;
+            const fbMessage = fbErr ? (typeof fbErr === 'string' ? fbErr : fbErr.message || JSON.stringify(fbErr)) : 'Error submitting feedback. Please try again.';
+            setError(String(fbMessage));
         }
     }, [feedback, apiUrl]);
 
