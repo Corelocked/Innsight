@@ -1,5 +1,25 @@
 {
-  "buildCommand": "cd voice-order-ui && npm run build",
-  "outputDirectory": "voice-order-ui/build",
-  "installCommand": "cd voice-order-ui && npm ci"
+  "version": 2,
+  "builds": [
+    {
+      "src": "api/*.py",
+      "use": "@vercel/python"
+    },
+    {
+      "src": "voice-order-ui/package.json",
+      "use": "@vercel/static-build",
+      "config": { "distDir": "build" }
+    }
+  ],
+  "routes": [
+    { "src": "/api/voice-order", "dest": "/api/voice_order.py" },
+    { "src": "/api/feedback", "dest": "/api/feedback.py" },
+    { "src": "/api/user-preferences", "dest": "/api/user_preferences.py" },
+    { "src": "/api/health", "dest": "/api/health.py" },
+    { "handle": "filesystem" },
+    { "src": "/(.*)", "dest": "/index.html" }
+  ],
+  "env": {
+    "PYTHONPATH": "."
+  }
 }
