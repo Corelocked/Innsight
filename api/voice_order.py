@@ -1,7 +1,7 @@
 import json
 from http.server import BaseHTTPRequestHandler
 
-from backend import handle_user_input
+from .backend import handle_user_input
 
 
 class handler(BaseHTTPRequestHandler):
