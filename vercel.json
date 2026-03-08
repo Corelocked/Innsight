@@ -17,7 +17,7 @@
     { "src": "/api/user-preferences", "dest": "/api/user_preferences.py" },
     { "src": "/api/health", "dest": "/api/health.py" },
     { "handle": "filesystem" },
-    { "src": "/(.*)", "dest": "/index.html" }
+    { "src": "/(.*)", "dest": "voice-order-ui/$1" }
   ],
   "installCommand": "cd voice-order-ui && npm ci",
   "buildCommand": "cd voice-order-ui && npm run build",
