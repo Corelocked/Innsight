@@ -1,32 +1,5 @@
 {
   "buildCommand": "cd voice-order-ui && npm run build",
   "outputDirectory": "voice-order-ui/build",
-  "installCommand": "cd voice-order-ui && npm ci",
-  "functions": {
-    "api/**/*.py": {
-      "runtime": "python3.9"
-    }
-  },
-  "rewrites": [
-    {
-      "source": "/api/voice-order",
-      "destination": "/api/voice_order.py"
-    },
-    {
-      "source": "/api/feedback",
-      "destination": "/api/feedback.py"
-    },
-    {
-      "source": "/api/user-preferences",
-      "destination": "/api/user_preferences.py"
-    },
-    {
-      "source": "/api/health",
-      "destination": "/api/health.py"
-    },
-    {
-      "source": "/(.*)",
-      "destination": "/index.html"
-    }
-  ]
+  "installCommand": "cd voice-order-ui && npm ci"
 }
