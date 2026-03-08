@@ -1,8 +1,11 @@
 // Environment configuration for API endpoint
-// Use REACT_APP_API_URL from environment variables or fallback to localhost for development
+// Use REACT_APP_API_URL from environment variables or fallback intelligently
+
+const isDevelopment = process.env.NODE_ENV === 'development';
 
 export const config = {
-    apiUrl: process.env.REACT_APP_API_URL || 'http://localhost:5000',
+    // Use same-origin (relative) API calls in production, localhost in dev
+    apiUrl: process.env.REACT_APP_API_URL || (isDevelopment ? 'http://localhost:5000' : ''),
     
     // Speech synthesis configuration
     speech: {
