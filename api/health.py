@@ -1,11 +1,25 @@
+import json
+
 def handler(request):
     """Simple diagnostic endpoint to confirm API routing."""
     # CORS preflight
     if request.method == 'OPTIONS':
-        return ('', 200, {
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-            'Access-Control-Allow-Headers': 'Content-Type',
-        })
+        return {
+            'statusCode': 200,
+            'headers': {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+                'Access-Control-Allow-Headers': 'Content-Type',
+                'Content-Type': 'application/json',
+            },
+            'body': ''
+        }
 
-    return ({'status': 'ok', 'message': 'health check'}, 200, {'Access-Control-Allow-Origin': '*'})
+    return {
+        'statusCode': 200,
+        'headers': {
+            'Access-Control-Allow-Origin': '*',
+            'Content-Type': 'application/json',
+        },
+        'body': json.dumps({'status': 'ok', 'message': 'health check'})
+    }
