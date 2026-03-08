@@ -76,12 +76,15 @@ def load_inquiries(file_path):
         return {}, set()
 
 
-# Resolve the path to the CSV in the repo
-DEFAULT_INQUIRIES_PATH = os.path.join(os.path.dirname(__file__), '..', 'voice-order-system', 'inquiries.csv')
+# Resolve the path to the CSV in the same folder (api/)
+# First check local api/ folder, then fallback to repo structure for dev
+DEFAULT_INQUIRIES_PATH = os.path.join(os.path.dirname(__file__), 'inquiries.csv')
 if os.path.exists(DEFAULT_INQUIRIES_PATH):
     inquiries_path = DEFAULT_INQUIRIES_PATH
 else:
-    inquiries_path = 'inquiries.csv'
+    # Fallback for local dev when running from repo root
+    fallback_path = os.path.join(os.path.dirname(__file__), '..', 'voice-order-system', 'inquiries.csv')
+    inquiries_path = fallback_path if os.path.exists(fallback_path) else 'inquiries.csv'
 
 inquiry_responses, frequent_words = load_inquiries(inquiries_path)
 
