@@ -19,5 +19,10 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+// Initialize analytics (call without assigning to avoid ESLint unused-var)
+try {
+  getAnalytics(app);
+} catch (e) {
+  // Analytics may not be available in some environments (e.g., test or serverless builds)
+}
 export const auth = getAuth(app);

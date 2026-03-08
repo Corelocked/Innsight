@@ -17,10 +17,14 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "update-browserslist-db": "npx update-browserslist-db@latest",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
   },
   "eslintConfig": {
     "extends": [

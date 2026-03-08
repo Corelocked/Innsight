@@ -1,9 +1,9 @@
 # 🚀 Vercel Deployment Checklist
 
 ## Pre-Deployment
-- [ ] Push all code to Git repository (GitHub/GitLab/Bitbucket)
-- [ ] Ensure `.env` and secrets are NOT committed
-- [ ] Verify `requirements.txt` contains only slim dependencies
+- [-] Push all code to Git repository (GitHub/GitLab/Bitbucket)
+- [-] Ensure `.env` and secrets are NOT committed
+- [-] Verify `requirements.txt` contains only slim dependencies
 - [ ] Test locally with `npm start` (frontend) and Python API
 
 ## Vercel Setup
