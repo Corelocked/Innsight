@@ -11,9 +11,8 @@
     { "src": "/api/(.*)", "dest": "/api/$1" },
     { "src": "/(.*)", "dest": "voice-order-ui/$1" }
   ],
-  "build": {
-    "command": "cd voice-order-ui && npm ci && npm run build"
-  },
+  "installCommand": "cd voice-order-ui && npm ci",
+  "buildCommand": "cd voice-order-ui && npm run build",
   "env": {
     "PYTHONPATH": "."
   }
