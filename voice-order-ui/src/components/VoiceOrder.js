@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { signOut } from "firebase/auth";
 import { auth } from '../firebase';
@@ -38,6 +38,7 @@ const VoiceOrder = () => {
     const [feedback, setFeedback] = useState('');
     const [chosenVoice, setChosenVoice] = useState(null);
     const [error, setError] = useState('');
+    const recognitionRetryRef = useRef(0);
     const navigate = useNavigate();
 
     // Memoize API URL to avoid recreating on every render
@@ -114,11 +115,32 @@ const VoiceOrder = () => {
 
         recognition.onerror = (event) => {
             console.error('Speech recognition error: ', event.error);
+
+            // Automatic single retry on transient network errors
+            if (event.error === 'network') {
+                if (recognitionRetryRef.current < 1) {
+                    recognitionRetryRef.current += 1;
+                    console.warn('Network error detected — retrying voice recognition once.');
+                    setError('Network issue detected. Retrying voice recognition...');
+                    // Small delay before retrying to allow transient network hiccups to clear
+                    setTimeout(() => {
+                        startVoiceRecognition();
+                    }, 1000);
+                    return;
+                }
+
+                // If retry already attempted, show a more actionable message
+                setError(getSpeechErrorMessage(event.error) + ' If the issue continues, try a different network, disable VPN/proxy, or use the text input below.');
+                return;
+            }
+
             setError(getSpeechErrorMessage(event.error));
         };
 
         recognition.onend = () => {
             console.log('Voice recognition ended.');
+            // reset retry counter after a session ends
+            recognitionRetryRef.current = 0;
         };
 
         recognition.start();
