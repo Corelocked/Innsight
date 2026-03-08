@@ -9,7 +9,7 @@
       "src": "voice-order-ui/package.json",
       "use": "@vercel/static-build",
       "config": { 
-        "distDir": "voice-order-ui/build"
+        "distDir": "build"
       }
     }
   ],
