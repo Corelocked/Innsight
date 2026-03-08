@@ -8,14 +8,9 @@
     }
   ],
   "routes": [
+    { "src": "/api/(.*)", "dest": "/api/$1" },
     { "src": "/(.*)", "dest": "voice-order-ui/$1" }
   ],
-  "functions": {
-    "api/**/*.py": {
-      "runtime": "python3.9",
-      "maxDuration": 10
-    }
-  },
   "env": {
     "PYTHONPATH": "."
   }
