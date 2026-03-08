@@ -13,6 +13,24 @@ import Form from 'react-bootstrap/Form';
 
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
+const getSpeechErrorMessage = (errorCode) => {
+    switch (errorCode) {
+        case 'network':
+            return 'Speech recognition network error. Ensure you are online, using HTTPS (or localhost), and try again.';
+        case 'not-allowed':
+        case 'service-not-allowed':
+            return 'Microphone access was denied. Please allow microphone permission in your browser settings.';
+        case 'no-speech':
+            return 'No speech detected. Please speak clearly and try again.';
+        case 'audio-capture':
+            return 'No microphone was found. Check your microphone connection and browser permissions.';
+        case 'aborted':
+            return 'Speech recognition was cancelled. Please try again.';
+        default:
+            return `Voice recognition error: ${errorCode}. Please try again.`;
+    }
+};
+
 const VoiceOrder = () => {
     const [input, setInput] = useState('');
     const [response, setResponse] = useState('');
@@ -54,9 +72,27 @@ const VoiceOrder = () => {
     }, [loadVoices]);
 
     // Start voice recognition (optimized with useCallback)
-    const startVoiceRecognition = useCallback(() => {
+    const startVoiceRecognition = useCallback(async () => {
         if (!SpeechRecognition) {
             setError("Your browser does not support Speech Recognition.");
+            return;
+        }
+
+        if (!window.isSecureContext && window.location.hostname !== 'localhost') {
+            setError('Voice recognition requires HTTPS. Please open the deployed HTTPS URL and try again.');
+            return;
+        }
+
+        if (!navigator.onLine) {
+            setError('You appear to be offline. Speech recognition requires an internet connection.');
+            return;
+        }
+
+        // Ask browser for microphone permission first to avoid opaque recognition failures.
+        try {
+            await navigator.mediaDevices.getUserMedia({ audio: true });
+        } catch (permissionError) {
+            setError('Microphone permission is required. Please allow microphone access and try again.');
             return;
         }
 
@@ -78,7 +114,7 @@ const VoiceOrder = () => {
 
         recognition.onerror = (event) => {
             console.error('Speech recognition error: ', event.error);
-            setError(`Voice recognition error: ${event.error}. Please try again.`);
+            setError(getSpeechErrorMessage(event.error));
         };
 
         recognition.onend = () => {
