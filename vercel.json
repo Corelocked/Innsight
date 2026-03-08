@@ -8,14 +8,13 @@
     {
       "src": "voice-order-ui/package.json",
       "use": "@vercel/static-build",
-      "config": { "distDir": "build" }
+      "config": { 
+        "distDir": "voice-order-ui/build"
+      }
     }
   ],
   "routes": [
-    { "src": "/api/voice-order", "dest": "/api/voice_order.py" },
-    { "src": "/api/feedback", "dest": "/api/feedback.py" },
-    { "src": "/api/user-preferences", "dest": "/api/user_preferences.py" },
-    { "src": "/api/health", "dest": "/api/health.py" },
+    { "src": "/api/(.*)", "dest": "/api/$1.py" },
     { "handle": "filesystem" },
     { "src": "/(.*)", "dest": "/index.html" }
   ],
