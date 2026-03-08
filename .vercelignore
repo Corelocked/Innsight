@@ -41,6 +41,9 @@ voice-order-system/
 *.pkl
 *.joblib
 
+# Do not deploy the full requirements file (contains heavy ML deps)
+requirements-full.txt
+
 # Testing
 *.test.js
 *.spec.js
